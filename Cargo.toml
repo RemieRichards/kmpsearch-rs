@@ -1,0 +1,16 @@
+[package]
+name = "kmpsearch"
+version = "0.1.0"
+authors = ["RemieRichards <remierichards@gmail.com>"]
+edition = "2018"
+repository = "https://github.com/RemieRichards/kmpsearch-rs"
+readme = "README.md"
+license = "MIT"
+keywords = ["searching", "KMP"]
+categories = ["algorithms"]
+description = """
+String/Byte pattern searching within byte slices or strings, using the Knuth Morris Pratt algorithm.
+"""
+
+
+[dependencies]
