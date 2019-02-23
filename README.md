@@ -24,3 +24,9 @@ if b"DEADBEEF".contains_needle(b"BEEF") {
 	println!("Doesn't match!");
 }
 ```
+
+Getting all the indexes of a string in another string
+```rust
+let res = "That fox is a cool fox, he knows magic".indexesof_needle("fox");
+assert_eq!(res.unwrap(), vec![5, 19]);
+```
