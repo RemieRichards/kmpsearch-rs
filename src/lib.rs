@@ -4,7 +4,7 @@ mod tests;
 /// It provides the pattern_table method (part of the KMP algorithm) and the various methods for searching.
 /// Haystack is implemented on all types that can be converted to a &[u8], such as Byte slices, str and Strings.
 pub trait Haystack {
-	/// Produce a 'pattern table' for use with the Knuth Morris Pratt algorithm.
+    /// Produce a 'pattern table' for use with the Knuth Morris Pratt algorithm.
     fn pattern_table(needle: &[u8]) -> Vec<usize> {
         let mut i = 0;
         let mut j = 1;
@@ -28,15 +28,15 @@ pub trait Haystack {
 
     /// Returns true if this Haystack contains needle.
     fn contains_needle<N: AsRef<[u8]>>(&self, needle: N) -> bool;
-	
-	/// Returns the first index of needle in this Haystack, or None if it doesn't contain the needle.
-	fn first_indexof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<usize>;
-	
-	/// Returns the last index of needle in this Haystack, or None if it doesn't contain the needle.
-	fn last_indexof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<usize>;
-	
-	/// Returns the last index of needle in this Haystack, or None if it doesn't contain the needle.
-	fn indexesof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<Vec<usize>>;
+
+    /// Returns the first index of needle in this Haystack, or None if it doesn't contain the needle.
+    fn first_indexof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<usize>;
+
+    /// Returns the last index of needle in this Haystack, or None if it doesn't contain the needle.
+    fn last_indexof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<usize>;
+
+    /// Returns the last index of needle in this Haystack, or None if it doesn't contain the needle.
+    fn indexesof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<Vec<usize>>;
 }
 
 /// Implementation allowing anything convertible to a &[u8] to use Haystack methods.
@@ -71,8 +71,8 @@ impl<H: AsRef<[u8]>> Haystack for H {
         }
         false
     }
-	
-	fn first_indexof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<usize> {
+
+    fn first_indexof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<usize> {
         let needle = needle.as_ref();
         let pattern_table = Self::pattern_table(needle);
         let haystack = &self.as_ref();
@@ -89,7 +89,7 @@ impl<H: AsRef<[u8]>> Haystack for H {
                 needle_c += 1;
             }
             if needle_c == needle_len {
-                return Some(haystack_c - needle_len)
+                return Some(haystack_c - needle_len);
             } else {
                 if haystack_c < haystack_len && haystack[haystack_c] != needle[needle_c] {
                     if needle_c != 0 {
@@ -100,10 +100,10 @@ impl<H: AsRef<[u8]>> Haystack for H {
                 }
             }
         }
-		None		
-	}
-	
-	fn last_indexof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<usize> {
+        None
+    }
+
+    fn last_indexof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<usize> {
         let needle = needle.as_ref();
         let pattern_table = Self::pattern_table(needle);
         let haystack = &self.as_ref();
@@ -113,8 +113,8 @@ impl<H: AsRef<[u8]>> Haystack for H {
 
         let haystack_len = haystack.len();
         let needle_len = needle.len();
-		
-		let mut index : Option<usize> = None;
+
+        let mut index: Option<usize> = None;
 
         while haystack_c < haystack_len {
             if haystack[haystack_c] == needle[needle_c] {
@@ -123,7 +123,7 @@ impl<H: AsRef<[u8]>> Haystack for H {
             }
             if needle_c == needle_len {
                 index = Some(haystack_c - needle_len);
-				needle_c = 0;
+                needle_c = 0;
             } else {
                 if haystack_c < haystack_len && haystack[haystack_c] != needle[needle_c] {
                     if needle_c != 0 {
@@ -134,10 +134,10 @@ impl<H: AsRef<[u8]>> Haystack for H {
                 }
             }
         }
-		index		
-	}
-	
-	fn indexesof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<Vec<usize>> {
+        index
+    }
+
+    fn indexesof_needle<N: AsRef<[u8]>>(&self, needle: N) -> Option<Vec<usize>> {
         let needle = needle.as_ref();
         let pattern_table = Self::pattern_table(needle);
         let haystack = &self.as_ref();
@@ -147,8 +147,8 @@ impl<H: AsRef<[u8]>> Haystack for H {
 
         let haystack_len = haystack.len();
         let needle_len = needle.len();
-		
-		let mut indexes = Vec::new();
+
+        let mut indexes = Vec::new();
 
         while haystack_c < haystack_len {
             if haystack[haystack_c] == needle[needle_c] {
@@ -157,7 +157,7 @@ impl<H: AsRef<[u8]>> Haystack for H {
             }
             if needle_c == needle_len {
                 indexes.push(haystack_c - needle_len);
-				needle_c = 0;
+                needle_c = 0;
             } else {
                 if haystack_c < haystack_len && haystack[haystack_c] != needle[needle_c] {
                     if needle_c != 0 {
@@ -168,10 +168,10 @@ impl<H: AsRef<[u8]>> Haystack for H {
                 }
             }
         }
-		if indexes.len() > 0 {
-			Some(indexes)
-		} else {
-			None
-		}
-	}
+        if indexes.len() > 0 {
+            Some(indexes)
+        } else {
+            None
+        }
+    }
 }
